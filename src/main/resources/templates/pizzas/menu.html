@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaforg">
 <head th:insert="fragments/resources :: headResources('Menu')"></head>
 <body>
+<nav th:replace="/fragments/navbar :: topNavbar('menu')"></nav>
 <div class="container">
     <ul th:if="${menu.size() > 0}" class="d-flex justify-content-center flex-wrap g-3">
         <li th:each="pizza : ${menu}" style="width:300px" class="card">

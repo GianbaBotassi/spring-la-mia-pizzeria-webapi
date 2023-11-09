@@ -1,0 +1,30 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<nav th:fragment="topNavbar(area)" class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" th:href="@{/home}">
+        <img style="width:100px" th:src="@{logo.jpg}"
+             alt="application logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" th:href="@{home}">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{pizzas}">Menu pizze</a>
+            </li>
+            <li class="nav-item dropdown">
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{home}">Home</a>
+                    <a class="dropdown-item" th:href="@{pizzas}">Menu pizze</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>
