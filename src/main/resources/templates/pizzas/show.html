@@ -10,7 +10,7 @@
             <img style="width:200px" th:src="*{picture}">
         </div>
         <p th:text="*{description}"></p>
-        <div th:text="|*{price}" €|></div>
+        <div th:text="|*{price} €|"></div>
     </div>
 </div>
 <th:block th:replace="fragments/resources :: jsResources"></th:block>

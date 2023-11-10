@@ -6,11 +6,10 @@
     <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
     <form th:action="@{/pizzas/menu}" method="GET" class="form-inline my-3 d-flex justify-content-center gap-2">
         <input class="form-control mr-sm-2" style="width:250px" type="search" placeholder="Cerca il nome di una pizza"
-               aria-label="Search" name="search">
+               aria-label="Search" name="search" th:value="${param.search}">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
     <div class="text-center">
-        <h4 class="mb-3">Ecco il menu:</h4>
         <div class="d-flex justify-content-center">
             <ul th:if="${menu.size() > 0}" class="list-unstyled" style="width:200px">
                 <li th:each="pizza : ${menu}" class="mb-3 d-flex justify-content-between align-items-center">
@@ -20,7 +19,7 @@
                     </a>
                 </li>
             </ul>
-            <!--            <div th:if="${menu.size() == 0}">Il menu è vuoto</div>-->
+            <div th:if="${menu.size() == 0}">Non ci sono risultati</div>
         </div>
     </div>
 </div>
