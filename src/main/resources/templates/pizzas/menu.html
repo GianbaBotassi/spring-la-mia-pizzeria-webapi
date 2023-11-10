@@ -2,19 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaforg">
 <head th:insert="fragments/resources :: headResources('Menu')"></head>
 <body>
-<nav th:replace="/fragments/navbar :: topNavbar('menu')"></nav>
 <div class="container">
-    <ul th:if="${menu.size() > 0}" class="d-flex justify-content-center flex-wrap g-3">
-        <li th:each="pizza : ${menu}" style="width:300px" class="card">
-            <div th:text="${pizza.name}"></div>
-            <div>
-                <img style="width:200px" th:src="${pizza.picture}">
-            </div>
-            <p th:text="${pizza.description}"></p>
-            <div th:text="|${pizza.price}" €|></div>
-        </li>
-    </ul>
-    <div th:if="${menu.size() == 0}">Il menu è vuoto</div>
+    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <form th:action="@{/pizzas/menu}" method="GET" class="form-inline my-3 d-flex justify-content-center gap-2">
+        <input class="form-control mr-sm-2" style="width:250px" type="search" placeholder="Cerca il nome di una pizza"
+               aria-label="Search" name="search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+    <div class="text-center">
+        <h4 class="mb-3">Ecco il menu:</h4>
+        <div class="d-flex justify-content-center">
+            <ul th:if="${menu.size() > 0}" class="list-unstyled" style="width:200px">
+                <li th:each="pizza : ${menu}" class="mb-3 d-flex justify-content-between align-items-center">
+                    <div th:text="${pizza.name}"></div>
+                    <a th:href="@{/pizzas/show/{id}(id=${pizza.id})}">
+                        <i class="fa-solid fa-circle-arrow-right"></i>
+                    </a>
+                </li>
+            </ul>
+            <!--            <div th:if="${menu.size() == 0}">Il menu è vuoto</div>-->
+        </div>
+    </div>
 </div>
+<th:block th:replace="fragments/resources :: jsResources"></th:block>
 </body>
 </html>

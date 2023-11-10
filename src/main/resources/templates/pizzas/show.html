@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaforg">
+<head th:insert="fragments/resources :: headResources('Menu')"></head>
+<body>
+<div class="container text-center">
+    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <div th:object="${pizza}">
+        <h4 th:text="*{name}"></h4>
+        <div>
+            <img style="width:200px" th:src="*{picture}">
+        </div>
+        <p th:text="*{description}"></p>
+        <div th:text="|*{price}" €|></div>
+    </div>
+</div>
+<th:block th:replace="fragments/resources :: jsResources"></th:block>
+</body>
+</html>
