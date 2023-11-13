@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaforg">
+<head th:insert="fragments/resources :: headResources('Menu')"></head>
+<body>
+<div class="container text-center">
+    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <form th:object="${pizza}"
+          th:action="@{/pizzas/create}"
+          method="POST">
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="name">Nome pizza</label>
+                <input type="text" class="form-control" id="name" placeholder="Nome pizza" th:field="*{name}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="description">Descrizione</label>
+                <input type="text" class="form-control" id="description" placeholder="Descrizione"
+                       th:field="*{description}">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="picture">Immagine</label>
+                <input type="text" class="form-control" id="picture" placeholder="Url immagine" th:field="*{picture}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="price">Prezzo</label>
+                <input type="number" class="form-control" id="price" placeholder="Prezzo" th:field="*{price}">
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Aggiungi pizza</button>
+    </form>
+</div>
+</body>
+</html>
