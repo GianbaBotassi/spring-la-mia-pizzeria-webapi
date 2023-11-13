@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -13,9 +17,17 @@ public class Pizza {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank(message = "Il nome non può essere vuoto")
+    @Size(max = 64)
     private String name;
+    @NotBlank(message = "La descrizione non può essere vuota")
+    @Size(max = 255)
     private String description;
+    @NotBlank(message = "L url dell immagine non può essere vuoto")
+    @Size(max = 255)
     private String picture;
+    @NotNull
+    @DecimalMin(value = "0.01", message = "Il prezzo non può essere inferiore a 0,01 €")
     private BigDecimal price;
 
     public Integer getId() {
