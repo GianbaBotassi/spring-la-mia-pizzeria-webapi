@@ -5,7 +5,7 @@
 <div class="container">
     <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
     <form th:object="${pizza}"
-          th:action="@{/pizzas/create}"
+          th:action="@{/pizzas/edit/{id}(id=${pizza.id})}"
           method="POST">
         <div class="row">
             <div class="col-6 mb-3">
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-primary" type="submit">Aggiungi</button>
+        <button class="btn btn-primary" type="submit">Modifica</button>
         <a th:href="@{/pizzas/menu}" class="btn btn-primary">Annulla</a>
     </form>
 </div>

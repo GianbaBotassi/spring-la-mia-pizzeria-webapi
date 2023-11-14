@@ -26,7 +26,7 @@ public class Pizza {
     @NotBlank(message = "L url dell immagine non può essere vuoto")
     @Size(max = 255)
     private String picture;
-    @NotNull
+    @NotNull(message = "Non deve essere vuoto")
     @DecimalMin(value = "0.01", message = "Il prezzo non può essere inferiore a 0,01 €")
     private BigDecimal price;
 
