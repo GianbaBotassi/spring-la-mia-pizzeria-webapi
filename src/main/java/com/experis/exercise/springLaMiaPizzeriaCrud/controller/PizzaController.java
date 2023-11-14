@@ -1,7 +1,9 @@
 package com.experis.exercise.springLaMiaPizzeriaCrud.controller;
 
+import com.experis.exercise.springLaMiaPizzeriaCrud.exceptions.NotFoundPizzaException;
 import com.experis.exercise.springLaMiaPizzeriaCrud.model.Pizza;
 import com.experis.exercise.springLaMiaPizzeriaCrud.repository.PizzaRepository;
+import com.experis.exercise.springLaMiaPizzeriaCrud.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +13,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -22,33 +23,25 @@ public class PizzaController {
     @Autowired
     private PizzaRepository pizzaRepository;
 
+    @Autowired
+    private PizzaService pizzaService;
+
     @GetMapping("/menu")
     public String index(@RequestParam Optional<String> search, Model model) {
         //prendo l'oggetto optional dalla barra search
-        List<Pizza> result;
-        //Condizione se vuoto search filtro elementi altrimenti mostro tutti
-        if (search.isPresent()) {
-            result = pizzaRepository.findByNameContainingIgnoreCase(search.get());
-        } else {
-            result = pizzaRepository.findAll();
-        }
-        //Passo in model i risultati
-        model.addAttribute("menu", result);
+        model.addAttribute("menu", pizzaService.getList(search));
         return "pizzas/menu";
     }
 
     @GetMapping("show/{id}")
     public String show(@PathVariable Integer id, Model model) {
         //prendo id da url con PathVariable e poi controllo se pizza esiste
-        Optional<Pizza> pizza = pizzaRepository.findById(id);
-        if (pizza.isPresent()) {
-            //Se esiste mostro i suoi dati passandoli in un model
-            model.addAttribute("pizza", pizza.get());
-            return "pizzas/show";
-        } else {
-            //Altrimenti lancio un'eccezione pizza non trovata
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza non trovata");
+        try {
+            model.addAttribute("pizza", pizzaService.getPizzaFromId(id));
+        } catch (NotFoundPizzaException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+        return "pizzas/show";
     }
 
     @GetMapping("/create")
@@ -66,7 +59,7 @@ public class PizzaController {
             return "/pizzas/create";
         }
         //Se non ha errori la salvo nel DB
-        pizzaRepository.save(formPizza);
+        pizzaService.savePizza(formPizza);
         return "redirect:/pizzas/menu";
     }
 
@@ -74,13 +67,12 @@ public class PizzaController {
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable Integer id, Model model) {
         //Recupero l'id con PathVariable e se l'id è presente lo inserisco nel model
-        Optional<Pizza> result = pizzaRepository.findById(id);
-        if (result.isPresent()) {
-            model.addAttribute("pizza", result.get());
-            return "/pizzas/edit";
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Pizza non trovata");
+        try {
+            model.addAttribute("pizza", pizzaService.getPizzaFromId(id));
+        } catch (NotFoundPizzaException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+        return "/pizzas/edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -89,15 +81,14 @@ public class PizzaController {
         if (bindingResult.hasErrors()) {
             return "/pizzas/edit";
         }
-        pizzaRepository.save(formPizza);
+        pizzaService.savePizza(formPizza);
         return "redirect:/pizzas/menu";
     }
 
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id) {
         //Recupero id e tramite repository lo elimino
-        pizzaRepository.deleteById(id);
+        pizzaService.deletePizza(id);
         return "redirect:/pizzas/menu";
     }
-
 }
