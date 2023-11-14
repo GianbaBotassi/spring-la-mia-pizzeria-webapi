@@ -22,7 +22,7 @@ public class PizzaService {
         return pizzaRepository.findAll();
     }
 
-    public Pizza getPizzaFromId(Integer id) {
+    public Pizza getPizzaFromId(Integer id) throws NotFoundPizzaException {
         Optional<Pizza> result = pizzaRepository.findById(id);
         if (result.isEmpty()) {
             throw new NotFoundPizzaException("Pizza non trovata");

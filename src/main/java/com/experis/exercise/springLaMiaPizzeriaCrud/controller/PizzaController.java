@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
@@ -86,9 +87,11 @@ public class PizzaController {
     }
 
     @PostMapping("/delete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         //Recupero id e tramite repository lo elimino
+        Pizza pizzaMessage = pizzaService.getPizzaFromId(id);
         pizzaService.deletePizza(id);
+        redirectAttributes.addFlashAttribute("message", "Hai eliminato la pizza " + pizzaMessage.getName());
         return "redirect:/pizzas/menu";
     }
 }
