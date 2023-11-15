@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${pizza.id != null}">
+<head
+        th:insert="fragments/resources :: headResources(${isEdit ? 'Edit' : 'Create'})"></head>
+<body>
+<nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
+<div class="container">
+    <h1 th:text="${isEdit ? 'Edit' : 'Create'}"></h1>
+    <hr>
+    <!-- form di creazione del book -->
+    <form
+            th:with="actionUrl=${isEdit ? '/pizzas/edit/'+pizza.id : '/pizzas/create'}"
+            method="POST"
+            th:action="@{${actionUrl}}"
+            th:object="${pizza}"
+    >
+        <div class="row">
+            <div class="col-6 mb-3" th:insert="/fragments/components :: formField('text','Nome','name')"></div>
+            <div class="col-6 mb-3"
+                 th:insert="/fragments/components :: formField('text','Descrizione','description')"></div>
+            <div class="col-6 mb-3"
+                 th:insert="/fragments/components :: formField('text','Url Foto','picture')"></div>
+            <div class="col-6 mb-3" th:insert="/fragments/components :: formField('number','Prezzo','price')"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Aggiungi</button>
+        <a th:href="@{/pizzas/menu}" class="btn btn-primary">Annulla</a>
+    </form>
+</div>
+</body>
+</html>

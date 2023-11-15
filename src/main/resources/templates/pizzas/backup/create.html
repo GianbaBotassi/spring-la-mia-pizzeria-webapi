@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Menu')"></head>
+<body>
+<div class="container">
+    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <form
+            th:object="${pizza}"
+            th:action="@{/pizzas/create}"
+            method="POST">
+        <div class="row">
+            <div class="col-6 mb-3" th:insert="/fragments/components :: formField('text','Nome','name')"></div>
+            <div class="col-6 mb-3"
+                 th:insert="/fragments/components :: formField('text','Descrizione','description')"></div>
+            <div class="col-6 mb-3"
+                 th:insert="/fragments/components :: formField('text','Url Foto','picture')"></div>
+            <div class="col-6 mb-3" th:insert="/fragments/components :: formField('number','Prezzo','price')"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Aggiungi</button>
+        <a th:href="@{/pizzas/menu}" class="btn btn-primary">Annulla</a>
+    </form>
+</div>
+</body>
+</html>

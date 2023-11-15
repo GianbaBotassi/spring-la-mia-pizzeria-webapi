@@ -49,7 +49,7 @@ public class PizzaController {
     public String create(Model model) {
         //Creo un'istanza di pizza vuota e la metto nel model
         model.addAttribute("pizza", new Pizza());
-        return "pizzas/create";
+        return "pizzas/form";
     }
 
     @PostMapping("/create")
@@ -57,11 +57,11 @@ public class PizzaController {
         //Recupero tramite ModelAttribute la pizza e controllo validazione
         //Ricorda di mettere nell'ordine corretto le annotation e BindingResult
         if (bindingResult.hasErrors()) {
-            return "/pizzas/create";
+            return "/pizzas/form";
         }
         //Se non ha errori la salvo nel DB
         pizzaService.savePizza(formPizza);
-        redirectAttributes.addFlashAttribute("message", "Hai eliminato la pizza " + formPizza.getName());
+        redirectAttributes.addFlashAttribute("message", "Hai aggiunto la pizza " + formPizza.getName());
         return "redirect:/pizzas/menu";
     }
 
@@ -74,14 +74,14 @@ public class PizzaController {
         } catch (NotFoundPizzaException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-        return "/pizzas/edit";
+        return "/pizzas/form";
     }
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id, @Valid @ModelAttribute("pizza") Pizza formPizza, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         //Recupero l'id e i dati inviati per la modifica e controllo la validazione
         if (bindingResult.hasErrors()) {
-            return "/pizzas/edit";
+            return "/pizzas/form";
         }
         pizzaService.savePizza(formPizza);
         redirectAttributes.addFlashAttribute("message", "Hai modificato la pizza " + formPizza.getName());
@@ -91,10 +91,10 @@ public class PizzaController {
     @PostMapping("/delete/{id}")
     public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
         //Recupero id e tramite repository lo elimino
-        pizzaService.deletePizza(id);
-        //recupero la pizza per mettere nel messaggio di redirect il nome
         Pizza pizzaMessage = pizzaService.getPizzaFromId(id);
         redirectAttributes.addFlashAttribute("message", "Hai eliminato la pizza " + pizzaMessage.getName());
+        pizzaService.deletePizza(id);
+        //recupero la pizza per mettere nel messaggio di redirect il nome
         return "redirect:/pizzas/menu";
     }
 }
