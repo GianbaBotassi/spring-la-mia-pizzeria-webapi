@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:with="isEdit=${offerta.id != null}">
 <head th:insert="fragments/resources :: headResources('offerte')"></head>
 <body>
 <div class="container">
     <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <h1 th:text="${isEdit ? 'Modifica la pizza' : 'Crea una nuova pizza'}"></h1>
     <form
+            th:with="actionUrl=${isEdit ? '/offerte/edit/' + offerta.id : '/offerte/create'}"
             th:object="${offerta}"
-            th:action="@{/offerte/create}"
+            th:action="@{${actionUrl}}"
             method="POST">
         <div class="row">
             <div class="col-6 mb-3" th:insert="/fragments/components :: formField('text','Nome offerta','name')"></div>
             <div class="col-6 mb-3"
                  th:insert="/fragments/components :: formField('date','Data inizio','startDate')"></div>
             <div class="col-6 mb-3" th:insert="/fragments/components :: formField('date','Data fine','endDate')"></div>
+            <input type="hidden" th:field="*{pizza.id}">
         </div>
-        <button class="btn btn-primary" type="submit">Aggiungi</button>
-        <a th:href="@{/pizzas/menu}" class="btn btn-primary">Annulla</a>
+        <button class="btn btn-primary" type="submit" th:text="isEdit ? 'Modifica' : 'Aggiungi'"></button>
+        <a th:href="@{/pizzas/show/{id}(id=*{pizza.id})}" class="btn btn-primary">Annulla</a>
     </form>
 </div>
 </body>

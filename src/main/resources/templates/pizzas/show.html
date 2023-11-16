@@ -4,7 +4,7 @@
 <body>
 <div class="container text-center">
     <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
-    <div class="container mt-4" th:object="${pizza}">
+    <div class="container my-4" th:object="${pizza}">
         <div class="row">
             <div class="col-md-4">
                 <img th:src="*{picture}" alt="Immagine della pizza" class="img-fluid">
@@ -15,6 +15,32 @@
                 <p th:text="*{description}"></p>
             </div>
         </div>
+        <a th:href="@{/offerte/create(id=*{id})}">Crea nuova offerta</a>
+        <h2>Offerte attive</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Nome Offerta</td>
+                <td>Data inizio</td>
+                <td>Data fine</td>
+                <td>Modifiche</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="off : *{offerList}" th:object="${off}">
+                <td th:text="*{name}"></td>
+                <td th:text="*{startDate}"></td>
+                <td th:text="*{endDate}"></td>
+                <td>
+                    <a th:href="@{/offerte/edit/{id}(id=*{id})}">
+                        <i class="text-warning fa-solid fa-pen-to-square me-2"></i>
+                    </a>
+                    <i class="text-danger fa-solid fa-trash"></i>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div th:if="*{offerList.size() == 0}" class="alert alert-info">Non ci sono offerte</div>
     </div>
 </div>
 <th:block th:replace="fragments/resources :: jsResources"></th:block>

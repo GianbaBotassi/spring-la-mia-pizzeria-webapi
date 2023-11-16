@@ -5,9 +5,8 @@
 <body>
 <nav th:replace="fragments/navbar :: topNavbar('pizzas')"></nav>
 <div class="container">
-    <h1 th:text="${isEdit ? 'Edit' : 'Create'}"></h1>
+    <h1 th:text="${isEdit ? 'Modifica la pizza' : 'Crea una nuova pizza'}"></h1>
     <hr>
-    <!-- form di creazione del book -->
     <form
             th:with="actionUrl=${isEdit ? '/pizzas/edit/'+pizza.id : '/pizzas/create'}"
             method="POST"

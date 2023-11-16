@@ -2,6 +2,7 @@ package com.experis.exercise.springLaMiaPizzeriaCrud.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
@@ -10,11 +11,11 @@ public class Offerta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotBlank
+    @NotBlank(message = "Il campo non può essere vuoto")
     private String name;
-    @NotBlank
+    @NotNull(message = "E' obbligatorio inserire la data")
     private LocalDate startDate;
-    @NotBlank
+    @NotNull(message = "E' obbligatorio inserire la data")
     private LocalDate endDate;
 
     @ManyToOne

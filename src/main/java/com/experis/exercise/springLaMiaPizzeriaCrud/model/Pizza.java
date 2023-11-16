@@ -1,15 +1,14 @@
 package com.experis.exercise.springLaMiaPizzeriaCrud.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pizza {
@@ -29,6 +28,17 @@ public class Pizza {
     @NotNull(message = "Non deve essere vuoto")
     @DecimalMin(value = "0.01", message = "Il prezzo non può essere inferiore a 0,01 €")
     private BigDecimal price;
+
+    @OneToMany(mappedBy = "pizza")
+    private List<Offerta> offerList = new ArrayList<>();
+
+    public List<Offerta> getOfferList() {
+        return offerList;
+    }
+
+    public void setOfferList(List<Offerta> offerList) {
+        this.offerList = offerList;
+    }
 
     public Integer getId() {
         return id;
