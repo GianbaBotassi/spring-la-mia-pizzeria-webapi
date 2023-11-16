@@ -34,4 +34,10 @@ public class OffertaService {
     public Offerta getOffer(Integer id) {
         return offertaRepository.findById(id).orElseThrow(() -> new NotFoundOffertaException("Offerta non trovata"));
     }
+
+    public void deleteOffer(Integer id) {
+        offertaRepository.deleteById(id);
+    }
+
+
 }
