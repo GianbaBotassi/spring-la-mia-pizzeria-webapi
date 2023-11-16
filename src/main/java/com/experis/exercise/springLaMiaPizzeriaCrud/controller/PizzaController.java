@@ -1,8 +1,9 @@
 package com.experis.exercise.springLaMiaPizzeriaCrud.controller;
 
 import com.experis.exercise.springLaMiaPizzeriaCrud.exceptions.NotFoundPizzaException;
+import com.experis.exercise.springLaMiaPizzeriaCrud.model.Offerta;
 import com.experis.exercise.springLaMiaPizzeriaCrud.model.Pizza;
-import com.experis.exercise.springLaMiaPizzeriaCrud.repository.PizzaRepository;
+import com.experis.exercise.springLaMiaPizzeriaCrud.service.OffertaService;
 import com.experis.exercise.springLaMiaPizzeriaCrud.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,12 @@ import java.util.Optional;
 public class PizzaController {
 
     //Injection del repository
-    @Autowired
-    private PizzaRepository pizzaRepository;
 
     @Autowired
     private PizzaService pizzaService;
+
+    @Autowired
+    private OffertaService offertaService;
 
     @GetMapping("/menu")
     public String index(@RequestParam Optional<String> search, Model model) {
@@ -93,8 +95,17 @@ public class PizzaController {
         //Recupero id e tramite repository lo elimino
         Pizza pizzaMessage = pizzaService.getPizzaFromId(id);
         redirectAttributes.addFlashAttribute("message", "Hai eliminato la pizza " + pizzaMessage.getName());
-        pizzaService.deletePizza(id);
+        Pizza pizza = pizzaService.getPizzaFromId(id);
         //recupero la pizza per mettere nel messaggio di redirect il nome
+        if (pizza.getOfferList().isEmpty()) {
+            pizzaService.deletePizza(id);
+        } else {
+            for (Offerta off : pizza.getOfferList()
+            ) {
+                offertaService.deleteOffer(off.getId());
+            }
+            pizzaService.deletePizza(id);
+        }
         return "redirect:/pizzas/menu";
     }
 }
