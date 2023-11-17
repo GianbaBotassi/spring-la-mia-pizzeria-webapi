@@ -3,7 +3,7 @@
 <head th:insert="fragments/resources :: headResources('Menu')"></head>
 <body>
 <div class="container">
-    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <nav th:replace="/fragments/navbar :: topNavbar('menu')"></nav>
     <form
             th:object="${pizza}"
             th:action="@{/pizzas/create}"

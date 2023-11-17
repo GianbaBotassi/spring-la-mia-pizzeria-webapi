@@ -3,7 +3,7 @@
 <head th:insert="fragments/resources :: headResources('offerte')"></head>
 <body>
 <div class="container">
-    <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
+    <nav th:replace="/fragments/navbar :: topNavbar('menu')"></nav>
     <h1 th:text="${isEdit ? 'Modifica la pizza' : 'Crea una nuova pizza'}"></h1>
     <form
             th:with="actionUrl=${isEdit ? '/offerte/edit/' + offerta.id : '/offerte/create'}"

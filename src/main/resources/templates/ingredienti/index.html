@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaforg">
+<head th:insert="fragments/resources :: headResources('Ingredienti')"></head>
+<body>
+<div class="container">
+    <nav th:replace="/fragments/navbar :: topNavbar('ingredienti')"></nav>
+    <div class="container my-4">
+        <h3>Ingredienti della pizzeria</h3>
+        <form
+                th:action="@{/ingredienti}"
+                method="POST"
+                th:object="${ingrediente}"
+        >
+            <!--            <input type="text" th:field="*{name}">-->
+            <div class="col-6 mb-3" th:insert="/fragments/components :: formField('text','Nome', 'name')"></div>
+            <button class="btn btn-primary mb-3" type="submit">Aggiungi Ingrediente</button>
+        </form>
+        <ul th:each="ing : ${ingredienti}">
+            <li class="row">
+                <span class="col-2" th:text="${ing.name}"></span>
+                <span class="col-1">
+                    <form
+                            th:action="@{/ingredienti/delete/{id}(id=${ing.id})}"
+                            method="POST"
+                    >
+                        <button type="submit" class="border-0 bg-white" onclick="return confirm('Elimina?')">
+                                    <i class="text-danger fa-solid fa-trash"></i>
+                                </button>
+                    </form>
+                </span>
+            </li>
+        </ul>
+    </div>
+</div>
+<th:block th:replace="fragments/resources :: jsResources"></th:block>
+</body>
+</html>

@@ -29,12 +29,23 @@ public class Pizza {
     @DecimalMin(value = "0.01", message = "Il prezzo non può essere inferiore a 0,01 €")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "pizza")
+    @OneToMany(mappedBy = "pizza", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Offerta> offerList = new ArrayList<>();
+    @ManyToMany
+    private List<Ingrediente> ingredList = new ArrayList<>();
+
+    public List<Ingrediente> getIngredList() {
+        return ingredList;
+    }
+
+    public void setIngredList(List<Ingrediente> ingredList) {
+        this.ingredList = ingredList;
+    }
 
     public List<Offerta> getOfferList() {
         return offerList;
     }
+
 
     public void setOfferList(List<Offerta> offerList) {
         this.offerList = offerList;
