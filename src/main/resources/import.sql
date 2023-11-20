@@ -12,3 +12,14 @@ INSERT INTO db_pizzeria.ingrediente (name) VALUES('Ananas');
 INSERT INTO db_pizzeria.ingrediente (name) VALUES('Basilico');
 INSERT INTO db_pizzeria.ingrediente (name) VALUES('Melanzane');
 INSERT INTO db_pizzeria.ingrediente (name) VALUES('Zucchine');
+
+INSERT INTO ruoli (name) VALUES('ADMIN');
+INSERT INTO ruoli (name) VALUES('USER');
+
+INSERT INTO utenti (email, first_name, last_name, registered_at, password) VALUES('cighi@gmail.com', 'Cighi', 'Nudo', '2023-11-20 10:35', '{noop}cighi');
+INSERT INTO utenti (email, first_name, last_name, registered_at, password) VALUES('pinni@gmail.com', 'Pinni', 'Renata', '2023-11-20 10:35','{noop}pinni');
+
+INSERT INTO utenti_ruoli (utente_id, ruolo_id) VALUES(1, 1);
+INSERT INTO utenti_ruoli (utente_id, ruolo_id) VALUES(1, 2);
+INSERT INTO utenti_ruoli (utente_id, ruolo_id) VALUES(2, 2);
+
