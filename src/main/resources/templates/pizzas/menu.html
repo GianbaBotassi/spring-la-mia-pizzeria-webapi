@@ -4,7 +4,7 @@
 <body>
 <div class="container">
     <nav th:replace="/fragments/navbar :: topNavbar('menu')"></nav>
-    <div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show">
+    <div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show mt-2">
         <span th:text="${message}"></span>
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>

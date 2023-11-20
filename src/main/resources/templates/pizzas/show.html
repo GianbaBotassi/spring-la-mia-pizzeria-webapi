@@ -9,13 +9,23 @@
             <div class="col-md-4">
                 <img th:src="*{picture}" alt="Immagine della pizza" class="img-fluid">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <h1 th:text="*{name}"></h1>
                 <p class="text-muted" th:text="|*{price} €|"></p>
                 <p th:text="*{description}"></p>
             </div>
+            <div class="col-4">
+                <h3>Ingredienti</h3>
+                <ul th:if="*{ingredList.size() > 0}" class="list-unstyled">
+                    <li th:each="ingr : *{ingredList}" th:text="${ingr.name}"></li>
+                </ul>
+                <div th:unless="*{ingredList.size() > 0}" class="alert alert-info">Non ha ingredienti</div>
+            </div>
         </div>
-        <a th:href="@{/offerte/create(id=*{id})}">Crea nuova offerta</a>
+        <div class="d-flex justify-content-center mt-2 gap-3">
+            <a class="btn btn-primary" th:href="@{/offerte/create(id=*{id})}">Crea nuova offerta</a>
+            <a class="btn btn-primary" th:href="@{/pizzas/edit/{id}(id=*{id})}">Modifica pizza</a>
+        </div>
         <h2>Offerte attive</h2>
         <table class="table">
             <thead>

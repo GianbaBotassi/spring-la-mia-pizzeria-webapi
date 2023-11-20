@@ -2,6 +2,7 @@ package com.experis.exercise.springLaMiaPizzeriaCrud.controller;
 
 import com.experis.exercise.springLaMiaPizzeriaCrud.exceptions.NotFoundPizzaException;
 import com.experis.exercise.springLaMiaPizzeriaCrud.model.Pizza;
+import com.experis.exercise.springLaMiaPizzeriaCrud.service.IngredienteService;
 import com.experis.exercise.springLaMiaPizzeriaCrud.service.OffertaService;
 import com.experis.exercise.springLaMiaPizzeriaCrud.service.PizzaService;
 import jakarta.validation.Valid;
@@ -28,6 +29,9 @@ public class PizzaController {
     @Autowired
     private OffertaService offertaService;
 
+    @Autowired
+    private IngredienteService ingredienteService;
+
     @GetMapping("/menu")
     public String index(@RequestParam Optional<String> search, Model model) {
         //prendo l'oggetto optional dalla barra search
@@ -50,6 +54,7 @@ public class PizzaController {
     public String create(Model model) {
         //Creo un'istanza di pizza vuota e la metto nel model
         model.addAttribute("pizza", new Pizza());
+        model.addAttribute("ingredienti", ingredienteService.getIngrList());
         return "pizzas/form";
     }
 
@@ -72,6 +77,7 @@ public class PizzaController {
         //Recupero l'id con PathVariable e se l'id è presente lo inserisco nel model
         try {
             model.addAttribute("pizza", pizzaService.getPizzaFromId(id));
+            model.addAttribute("ingredienti", ingredienteService.getIngrList());
         } catch (NotFoundPizzaException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
