@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaforg">
+<html lang="en" xmlns:th="http://www.thymeleaforg" xmlns:sec="http://www.thymeleaforg">
 <head th:insert="fragments/resources :: headResources('Home')"></head>
 <body>
 <div class="container">
     <nav th:replace="/fragments/navbar :: topNavbar('home')"></nav>
-    <h2>Benvenuti nella pizzeria</h2>
+    <h2>Benvenuto nella pizzeria </h2><span sec:authentication="name"></span>
 </div>
 <th:block th:replace="fragments/resources :: jsResources"></th:block>
 </body>

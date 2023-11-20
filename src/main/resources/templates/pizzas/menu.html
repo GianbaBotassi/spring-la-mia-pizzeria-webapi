@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaforg">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head th:insert="fragments/resources :: headResources('Menu')"></head>
 <body>
 <div class="container">
@@ -25,11 +25,11 @@
                             <a th:href="@{/pizzas/show/{id}(id=${pizza.id})}">
                                 <i class="fa-solid fa-circle-arrow-right"></i>
                             </a>
-                            <a th:href="@{/pizzas/edit/{id}(id=${pizza.id})}">
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/pizzas/edit/{id}(id=${pizza.id})}">
                                 <i class="text-warning fa-solid fa-pen-to-square"></i>
                             </a>
                             <form method="POST" th:action="@{/pizzas/delete/{id}(id=${pizza.id})}">
-                                <button type="submit" class="border-0 bg-white" onclick="return confirm('Elimina?')">
+                                <button sec:authorize="hasAuthority('ADMIN')" type="submit" class="border-0 bg-white" onclick="return confirm('Elimina?')">
                                     <i class="text-danger fa-solid fa-trash"></i>
                                 </button>
                             </form>
@@ -39,7 +39,7 @@
                 <div th:if="${menu.size() == 0}">Non ci sono risultati</div>
             </div>
         </div>
-        <div>
+        <div sec:authorize="hasAuthority('ADMIN')">
             <a class="btn btn-primary" th:href="@{/pizzas/create}">Aggiungi pizza</a>
         </div>
     </div>

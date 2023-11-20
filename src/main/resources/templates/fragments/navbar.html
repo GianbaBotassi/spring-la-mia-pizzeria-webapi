@@ -1,25 +1,28 @@
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <body>
-<nav th:fragment="topNavbar(area)" class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" th:href="@{/home}">
+<nav th:fragment="topNavbar(area)" class="navbar navbar-expand-lg navbar-light bg-light row align-items-center">
+
+    <a class="navbar-brand col-2" th:href="@{/home}">
         <img style="width:100px" th:src="@{/logo.jpg}"
              alt="application logo"></a>
-    <div id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
+    <div id="navbarSupportedContent" class="col-5">
+        <ul class="list-unstyled row">
+            <li class="nav-item active col-3">
                 <a class="nav-link" th:href="@{/home}" th:classAppend="${area == 'home' ? 'active' : ''}">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item col-5">
                 <a class="nav-link" th:href="@{/pizzas/menu}" th:classAppend="${area == 'menu' ? 'active' : ''}">Menu
                     pizze</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item col-3" sec:authorize="hasAuthority('ADMIN')">
                 <a class="nav-link" th:href="@{/ingredienti}"
                    th:classAppend="${area == 'ingredienti' ? 'active' : ''}">Ingredienti</a>
             </li>
-
         </ul>
     </div>
+    <div class="col-3">
+        <div class="mb-2" sec:authentication="name"></div>
+        <a class="btn btn-primary" href="/logout">Logout</a></div>
 </nav>
 </body>
 </html>

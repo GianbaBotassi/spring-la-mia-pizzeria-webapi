@@ -18,17 +18,6 @@ public class Utente {
     private String lastName;
     private String email;
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -38,7 +27,7 @@ public class Utente {
     @Column(name = "registered_at")
     private LocalDateTime registeredAt;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "utenti_ruoli",
             joinColumns = @JoinColumn(name = "utente_id"),
             inverseJoinColumns = @JoinColumn(name = "ruolo_id"))
@@ -90,5 +79,17 @@ public class Utente {
 
     public void setRegisteredAt(LocalDateTime registeredAt) {
         this.registeredAt = registeredAt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }
