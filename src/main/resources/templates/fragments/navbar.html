@@ -1,28 +1,34 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <body>
 <nav th:fragment="topNavbar(area)" class="navbar navbar-expand-lg navbar-light bg-light row align-items-center">
-
-    <a class="navbar-brand col-2" th:href="@{/home}">
-        <img style="width:100px" th:src="@{/logo.jpg}"
-             alt="application logo"></a>
-    <div id="navbarSupportedContent" class="col-5">
-        <ul class="list-unstyled row">
-            <li class="nav-item active col-3">
-                <a class="nav-link" th:href="@{/home}" th:classAppend="${area == 'home' ? 'active' : ''}">Home</a>
-            </li>
-            <li class="nav-item col-5">
-                <a class="nav-link" th:href="@{/pizzas/menu}" th:classAppend="${area == 'menu' ? 'active' : ''}">Menu
-                    pizze</a>
-            </li>
-            <li class="nav-item col-3" sec:authorize="hasAuthority('ADMIN')">
-                <a class="nav-link" th:href="@{/ingredienti}"
-                   th:classAppend="${area == 'ingredienti' ? 'active' : ''}">Ingredienti</a>
-            </li>
-        </ul>
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home}">
+            <img style="width:100px" th:src="@{/logo.jpg}"
+                 alt="application logo"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/home}" th:classAppend="${area == 'home' ? 'active' : ''}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/pizzas/menu}" th:classAppend="${area == 'menu' ? 'active' : ''}">Menu
+                        pizze</a>
+                </li>
+                <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                    <a class="nav-link" th:href="@{/ingredienti}"
+                       th:classAppend="${area == 'ingredienti' ? 'active' : ''}">Ingredienti</a>
+                </li>
+            </ul>
+            <div>
+                <div class="mb-2" sec:authentication="name"></div>
+                <a class="btn btn-primary" href="/logout">Logout</a></div>
+        </div>
     </div>
-    <div class="col-3">
-        <div class="mb-2" sec:authentication="name"></div>
-        <a class="btn btn-primary" href="/logout">Logout</a></div>
 </nav>
 </body>
 </html>
