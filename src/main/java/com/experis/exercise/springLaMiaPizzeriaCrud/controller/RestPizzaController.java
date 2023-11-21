@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin
@@ -20,8 +21,8 @@ public class RestPizzaController {
     private PizzaService pizzaService;
 
     @GetMapping
-    public List<Pizza> getPizzasList() {
-        return pizzaService.getPizzasList();
+    public List<Pizza> getPizzasList(@RequestParam Optional<String> search) {
+        return pizzaService.getList(search);
     }
 
     @GetMapping("/{id}")
@@ -48,5 +49,14 @@ public class RestPizzaController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public void deletePizza(@PathVariable Integer id) {
+        try {
+            Pizza pizzaToDelete = pizzaService.getPizzaFromId(id);
+            pizzaService.deletePizza(id);
+        } catch (NotFoundPizzaException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
 
 }

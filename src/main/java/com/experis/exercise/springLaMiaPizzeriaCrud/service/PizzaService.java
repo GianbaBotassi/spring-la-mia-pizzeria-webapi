@@ -41,7 +41,6 @@ public class PizzaService {
         pizzaEdit.setPicture(pizza.getPicture());
         pizzaEdit.setPrice(pizza.getPrice());
         pizzaEdit.setIngredList(pizza.getIngredList());
-        pizzaEdit.setOfferList(pizza.getOfferList());
 
         return pizzaRepository.save(pizzaEdit);
     }
