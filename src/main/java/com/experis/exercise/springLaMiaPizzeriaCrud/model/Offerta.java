@@ -1,5 +1,6 @@
 package com.experis.exercise.springLaMiaPizzeriaCrud.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "offerte")
 public class Offerta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,6 +22,7 @@ public class Offerta {
 
     @ManyToOne
     @JoinColumn(name = "pizza.id", nullable = false)
+    @JsonIgnore
     private Pizza pizza;
 
     public Integer getId() {

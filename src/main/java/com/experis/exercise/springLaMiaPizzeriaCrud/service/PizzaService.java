@@ -22,12 +22,28 @@ public class PizzaService {
         return pizzaRepository.findAll();
     }
 
+    public List<Pizza> getPizzasList() {
+        return pizzaRepository.findAll();
+    }
+
     public Pizza getPizzaFromId(Integer id) throws NotFoundPizzaException {
         Optional<Pizza> result = pizzaRepository.findById(id);
         if (result.isEmpty()) {
             throw new NotFoundPizzaException("Pizza non trovata");
         }
         return result.get();
+    }
+
+    public Pizza pizzaEdit(Pizza pizza) {
+        Pizza pizzaEdit = getPizzaFromId(pizza.getId());
+        pizzaEdit.setName(pizza.getName());
+        pizzaEdit.setDescription(pizza.getDescription());
+        pizzaEdit.setPicture(pizza.getPicture());
+        pizzaEdit.setPrice(pizza.getPrice());
+        pizzaEdit.setIngredList(pizza.getIngredList());
+        pizzaEdit.setOfferList(pizza.getOfferList());
+
+        return pizzaRepository.save(pizzaEdit);
     }
 
     public void savePizza(Pizza pizza) {

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "pizzas")
 public class Pizza {
 
     @Id
@@ -32,6 +33,9 @@ public class Pizza {
     @OneToMany(mappedBy = "pizza", orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Offerta> offerList = new ArrayList<>();
     @ManyToMany
+    @JoinTable(name = "pizzas_ingredienti",
+            joinColumns = @JoinColumn(name = "pizza_id"),
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id"))
     private List<Ingrediente> ingredList = new ArrayList<>();
 
     public List<Ingrediente> getIngredList() {

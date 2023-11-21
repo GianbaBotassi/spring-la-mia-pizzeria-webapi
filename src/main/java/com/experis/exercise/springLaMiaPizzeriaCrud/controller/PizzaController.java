@@ -8,6 +8,7 @@ import com.experis.exercise.springLaMiaPizzeriaCrud.service.PizzaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,9 +34,10 @@ public class PizzaController {
     private IngredienteService ingredienteService;
 
     @GetMapping("/menu")
-    public String index(@RequestParam Optional<String> search, Model model) {
+    public String index(@RequestParam Optional<String> search, Model model, Authentication authentication) {
         //prendo l'oggetto optional dalla barra search
         model.addAttribute("menu", pizzaService.getList(search));
+        model.addAttribute("utente", authentication.getPrincipal());
         return "pizzas/menu";
     }
 
