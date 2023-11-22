@@ -4,9 +4,8 @@
     <router-link :to="{ name: 'create' }">
       <i class="fa-solid fa-circle-plus"></i>
     </router-link>
-    <form @submit.prevent="searchPizza">
-      <label for="search"></label>
-      <input type="text" id="search" v-model="search" />
+    <form @submit.prevent="searchPizza(searchWord)" class="d-flex gap-2">
+      <input class="rounded" type="text" id="search" v-model="searchWord" />
       <button class="rounded" type="submit">Cerca</button>
     </form>
   </div>
@@ -40,13 +39,13 @@ export default {
   data() {
     return {
       listPizza: [],
-      search: "",
+      urlApi: "http://localhost:8080/api/pizzas",
     };
   },
   methods: {
     deletePizza(pizza) {
       axios
-        .delete(`http://localhost:8080/api/pizzas/${pizza}`)
+        .delete(this.urlApi + "/" + pizza)
         .then((response) => {
           console.log(response);
           this.getList();
@@ -55,9 +54,9 @@ export default {
           console.log(error);
         });
     },
-    getList(param) {
+    getList() {
       axios
-        .get(`http://localhost:8080/api/pizzas`)
+        .get(this.urlApi)
         .then((response) => {
           this.listPizza = response.data;
         })
@@ -65,17 +64,19 @@ export default {
           console.log(error);
         });
     },
-    searchPizza() {},
+    searchPizza(search) {
+      axios
+        .get("http://localhost:8080/api/pizzas?search=" + search)
+        .then((response) => {
+          this.listPizza = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
-    axios
-      .get(`http://localhost:8080/api/pizzas`)
-      .then((response) => {
-        this.listPizza = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    this.getList();
   },
 };
 </script>
